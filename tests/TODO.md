@@ -8,12 +8,16 @@
       b) Get all active coins into a dataframe
       c) Create a price and account value columns
 
-- [ ] Translate getERC20Tokens.py into etherscanTools.py and coinGeckoTools.py
+- [x] Translate getERC20Tokens.py into etherscanTools.py and coinGeckoTools.py
       a) Let the tests guide you my son (why is AGIX weird?)
       b) Make the unit tests with a specific time snapshot (hardcode the block number)
       c) Print the dataframe into a nice GUI ;)
 
-- [ ] Replicate the ERC20 view for ERC721 tokens
+- [x] Replicate the ERC20 view for ERC721 tokens
       a) See what NFT's are missing
       b) See what useful information Opensea offers
       c) Show off the NFT!?!?!?
+
+- [ ] Can you identify a staked address?
+
+- [ ] Plot coin values over time with historical data

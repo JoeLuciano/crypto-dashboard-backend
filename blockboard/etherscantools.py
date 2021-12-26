@@ -9,8 +9,8 @@ class EtherscanTools:
         self.address = wallet_address
         self.erc20_txn_history = self.get_erc20_txn_history()
         self.erc20_txn_history_df = self.get_erc20_txn_history_dataframe()
-
-    """Tested"""
+        self.erc721_txn_history = self.get_erc721_txn_history()
+        self.erc721_txn_history_df = self.get_erc721_txn_history_dataframe()
 
     def get_eth_balance(self, wallet_address=None):
         if wallet_address is None:
@@ -83,7 +83,27 @@ class EtherscanTools:
             ether_balance = int(wei_balance)/1e8
         return ether_balance
 
-    """END Tested"""
+    def get_erc721_txn_history(self, wallet_address=None):
+        if wallet_address is None:
+            wallet_address = self.address
+        txns = self.api.get_erc721_token_transfer_events_by_address(
+            address=wallet_address, startblock=0, endblock=99999999, sort='asc')
+        return txns
+
+    def get_erc721_txn_history_dataframe(self, erc721_txns=None):
+        if erc721_txns is None:
+            erc721_txns = self.erc721_txn_history
+        erc721_cols = self.get_column_list(erc721_txns)
+        erc721_df = pd.DataFrame(erc721_txns, columns=erc721_cols)
+        return erc721_df
+
+    def get_all_erc721_contract_addresses(self, erc721_df=None):
+        if erc721_df is None:
+            erc721_df = self.erc721_txn_history_df
+        contract_addresses = erc721_df['contractAddress'].drop_duplicates()
+        print(contract_addresses)
+        return contract_addresses
+
     # How to test?
 
     def convert_days_ago_to_block_number(self, number_of_days):

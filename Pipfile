@@ -8,10 +8,12 @@ etherscan-python = "*"
 pytz = "*"
 pandas = "*"
 pycoingecko = "*"
+opensea-api = "*"
 
 [dev-packages]
 pytest = "*"
 ipykernel = "*"
+pandasgui = "*"
 
 [requires]
 python_version = "3.9"

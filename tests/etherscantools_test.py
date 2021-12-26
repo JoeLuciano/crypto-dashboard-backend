@@ -82,4 +82,13 @@ def test_get_erc20_token_balance():
         font_contract_address)
     assert erc20_token_balance == 47.780271931955994
 
+
+def test_get_all_erc721_contract_addresses():
+    erc721_txns = etherscanTools.get_erc721_txn_history()
+    assert int(erc721_txns[0]['blockNumber']) == 13032058
+    erc721_df = etherscanTools.get_erc721_txn_history_dataframe()
+    assert erc721_df['tokenSymbol'][0] == 'DEAD'
+    erc721_addresses = etherscanTools.get_all_erc721_contract_addresses()
+    assert erc721_addresses[0] == '0x6fc355d4e0ee44b292e50878f49798ff755a5bbc'
+
     # def test_convert_days_ago_to_block_number()
