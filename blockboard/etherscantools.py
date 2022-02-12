@@ -1,16 +1,25 @@
 from etherscan import Etherscan
 import datetime as dt
 import pandas as pd
+import pytz
 
 
 class EtherscanTools:
     def __init__(self, api_key, wallet_address):
         self.api = Etherscan(api_key)
         self.address = wallet_address
-        self.erc20_txn_history = self.get_erc20_txn_history()
-        self.erc20_txn_history_df = self.get_erc20_txn_history_dataframe()
-        self.erc721_txn_history = self.get_erc721_txn_history()
-        self.erc721_txn_history_df = self.get_erc721_txn_history_dataframe()
+        try:
+            self.erc20_txn_history = self.get_erc20_txn_history()
+            self.erc20_txn_history_df = self.get_erc20_txn_history_dataframe()
+        except:
+            self.erc20_txn_history = None
+            self.erc20_txn_history_df = None
+        try:
+            self.erc721_txn_history = self.get_erc721_txn_history()
+            self.erc721_txn_history_df = self.get_erc721_txn_history_dataframe()
+        except:
+            self.erc721_txn_history = None
+            self.erc721_txn_history_df = None
 
     def get_eth_balance(self, wallet_address=None):
         if wallet_address is None:
@@ -30,6 +39,24 @@ class EtherscanTools:
 
         start_block = self.get_block_number_by_datetime(start_of_txn_day)
         end_block = self.get_block_number_by_datetime(end_of_txn_day)
+
+        if wallet_address is None:
+            wallet_address = self.address
+        normal_txns = self.api.get_normal_txs_by_address(
+            address=wallet_address, startblock=start_block, endblock=end_block, sort='asc')
+        return normal_txns
+
+    def get_normal_txns_for_year(self, year, wallet_address=None):
+        start_of_year = dt.datetime(
+            year=year,
+            month=1,
+            day=1,
+            tzinfo=pytz.timezone('EST')
+        )
+        end_of_year = start_of_year + dt.timedelta(days=365)
+
+        start_block = self.get_block_number_by_datetime(start_of_year)
+        end_block = self.get_block_number_by_datetime(end_of_year)
 
         if wallet_address is None:
             wallet_address = self.address

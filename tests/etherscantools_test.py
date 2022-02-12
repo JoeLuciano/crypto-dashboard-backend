@@ -1,4 +1,4 @@
-from blockboard.etherscantools import EtherscanTools
+from blockboard.etherscanTools import EtherscanTools
 import datetime as dt
 import pytz
 
