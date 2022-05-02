@@ -64,10 +64,6 @@ class EtherscanTools:
             address=wallet_address, startblock=start_block, endblock=end_block, sort='asc')
         return normal_txns
 
-    @staticmethod
-    def get_column_list(structure):
-        return list(structure[0].keys())
-
     def get_block_number_by_datetime(self, date_time):
         timestamp = round(date_time.timestamp())
         return self.api.get_block_number_by_timestamp(timestamp, closest='before')
@@ -130,6 +126,11 @@ class EtherscanTools:
         contract_addresses = erc721_df['contractAddress'].drop_duplicates()
         print(contract_addresses)
         return contract_addresses
+
+
+    @staticmethod
+    def get_column_list(structure):
+        return list(structure[0].keys())
 
     # How to test?
 

@@ -9,6 +9,8 @@ pytz = "*"
 pandas = "*"
 pycoingecko = "*"
 opensea-api = "*"
+web3 = "*"
+eth-tester = "*"
 
 [dev-packages]
 pytest = "*"
